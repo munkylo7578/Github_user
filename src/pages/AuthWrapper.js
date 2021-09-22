@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import loadingGif from '../images/preloader.gif';
 import styled from 'styled-components';
-function AuthWrapper() {
-  return <h2>authwrapper component</h2>;
+function AuthWrapper({children}) {
+  const {isLoading,error} = useAuth0()
+  if(isLoading){
+    return <Wrapper>
+      <img src={loadingGif} alt='spinner'></img>
+    </Wrapper>
+  }
+  if(error){
+    return <h1>{error}</h1>
+  }
+  return <>{children}</>;
 }
 
 const Wrapper = styled.section`
